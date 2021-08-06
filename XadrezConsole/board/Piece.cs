@@ -9,10 +9,15 @@
 
         public Piece (Board board, Color color)
         {
-            this.position = null;
+            position = null;
             this.board = board;
             this.color = color;
-            this.movesQuantity = 0;
+            movesQuantity = 0;
+        }
+
+        public void incrementMoves()
+        {
+            movesQuantity++;
         }
     }
 }
