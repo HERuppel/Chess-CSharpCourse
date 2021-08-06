@@ -1,4 +1,5 @@
 ﻿using System;
+using ChessOnConsole;
 using ChessOnConsole.chessboard;
 
 namespace XadrezConsole
@@ -8,6 +9,8 @@ namespace XadrezConsole
         static void Main(string[] args)
         {
             Chessboard board = new Chessboard(8, 8);
+
+            Screen.printBoard(board);
         }
     }
 }
