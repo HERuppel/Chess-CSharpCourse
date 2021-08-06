@@ -15,6 +15,11 @@
         {
             return $"{row}, {column}";
         }
+
+        public void defineValues(int row, int column)
+        {
+
+        }
     }
 
 
