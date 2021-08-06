@@ -25,14 +25,14 @@ namespace ChessOnConsole.chess
             Position pos = new Position(0, 0);
 
             //up
-            pos.defineValues(pos.row - 1, pos.column);
+            pos.defineValues(position.row - 1, position.column);
 
             if (board.validPosition(pos) && canMove(pos)) {
                 mat[pos.row, pos.column] = true;
             }
 
             //NE
-            pos.defineValues(pos.row - 1, pos.column + 1);
+            pos.defineValues(position.row - 1, position.column + 1);
 
             if (board.validPosition(pos) && canMove(pos))
             {
@@ -40,7 +40,7 @@ namespace ChessOnConsole.chess
             }
 
             //right
-            pos.defineValues(pos.row, pos.column + 1);
+            pos.defineValues(position.row, position.column + 1);
 
             if (board.validPosition(pos) && canMove(pos))
             {
@@ -48,7 +48,7 @@ namespace ChessOnConsole.chess
             }
 
             //SE
-            pos.defineValues(pos.row + 1, pos.column + 1);
+            pos.defineValues(position.row + 1, position.column + 1);
 
             if (board.validPosition(pos) && canMove(pos))
             {
@@ -56,7 +56,7 @@ namespace ChessOnConsole.chess
             }
 
             //down
-            pos.defineValues(pos.row + 1, pos.column);
+            pos.defineValues(position.row + 1, position.column);
 
             if (board.validPosition(pos) && canMove(pos))
             {
@@ -64,7 +64,7 @@ namespace ChessOnConsole.chess
             }
 
             //SW
-            pos.defineValues(pos.row + 1, pos.column -1);
+            pos.defineValues(position.row + 1, position.column -1);
 
             if (board.validPosition(pos) && canMove(pos))
             {
@@ -72,7 +72,7 @@ namespace ChessOnConsole.chess
             }
 
             //left
-            pos.defineValues(pos.row, pos.column - 1);
+            pos.defineValues(position.row, position.column - 1);
 
             if (board.validPosition(pos) && canMove(pos))
             {
@@ -80,7 +80,7 @@ namespace ChessOnConsole.chess
             }
 
             //NW
-            pos.defineValues(pos.row - 1, pos.column - 1);
+            pos.defineValues(position.row - 1, position.column - 1);
 
             if (board.validPosition(pos) && canMove(pos))
             {

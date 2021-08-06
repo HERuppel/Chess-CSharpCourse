@@ -20,9 +20,6 @@
             movesQuantity++;
         }
 
-        public abstract bool[,] possibleMoves()
-        {
-
-        }
+        public abstract bool[,] possibleMoves();
     }
 }
