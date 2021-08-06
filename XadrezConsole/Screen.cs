@@ -1,11 +1,11 @@
 ﻿using System;
-using ChessOnConsole.chessboard;
+using ChessOnConsole.board;
 
 namespace ChessOnConsole
 {
     class Screen
     {
-        public static void printBoard(Chessboard board)
+        public static void printBoard(Board board)
         {
 
             for (int i = 0; i < board.rows; i++)
