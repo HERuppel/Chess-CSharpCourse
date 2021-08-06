@@ -9,7 +9,7 @@ namespace ChessOnConsole.chess
 
         public override string ToString()
         {
-            return "R ";
+            return "R";
         }
     }
 }

@@ -9,11 +9,13 @@ namespace XadrezConsole
     {
         static void Main(string[] args)
         {
-            ChessPosition pos = new ChessPosition('a', 1);
+            Board board = new Board(8, 8);
 
-            Console.WriteLine(pos);
+            board.placePiece(new Rook(board, Color.Black), new Position(0, 0));
+            board.placePiece(new Rook(board, Color.Black), new Position(0, 7));
 
-            Console.WriteLine(pos.toPosition());
+
+            Screen.printBoard(board);
 
         }
     }
