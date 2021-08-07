@@ -38,6 +38,26 @@ namespace ChessOnConsole.chess
                 captured.Add(capturedPiece);
             }
 
+            //#Special move = small rook
+            if (piece is King && destiny.column == origin.column + 2)
+            {
+                Position originR = new Position(origin.row, origin.column + 3);
+                Position destinyR = new Position(origin.row, origin.column + 1);
+                Piece Rook = board.takePiece(originR);
+                Rook.incrementMoves();
+                board.placePiece(Rook, destinyR);
+            }
+
+            //#Special move = rook
+            if (piece is King && destiny.column == origin.column - 2)
+            {
+                Position originR = new Position(origin.row, origin.column - 4);
+                Position destinyR = new Position(origin.row, origin.column - 1);
+                Piece Rook = board.takePiece(originR);
+                Rook.incrementMoves();
+                board.placePiece(Rook, destinyR);
+            }
+
             return capturedPiece;
         }
 
@@ -52,6 +72,28 @@ namespace ChessOnConsole.chess
                 captured.Remove(capturedPiece);
             }
             board.placePiece(p, origin);
+
+            //#Special move = small rook
+            if (p is King && destiny.column == origin.column + 2)
+            {
+                Position originR = new Position(origin.row, origin.column + 3);
+                Position destinyR = new Position(origin.row, origin.column + 1);
+                Piece Rook = board.takePiece(destinyR);
+                Rook.decrementMoves();
+                board.placePiece(Rook, originR);
+            }
+
+            //#Special move = rook
+            if (p is King && destiny.column == origin.column - 2)
+            {
+                Position originR = new Position(origin.row, origin.column - 4);
+                Position destinyR = new Position(origin.row, origin.column - 1);
+                Piece Rook = board.takePiece(destinyR);
+                Rook.decrementMoves();
+                board.placePiece(Rook, originR);
+            }
+
+
         }
 
         public void makeAPlay(Position origin, Position destiny)
@@ -237,7 +279,7 @@ namespace ChessOnConsole.chess
             placeNewPiece('b', 1, new Horse(board, Color.White));
             placeNewPiece('c', 1, new Bishop(board, Color.White));
             placeNewPiece('d', 1, new Queen(board, Color.White));
-            placeNewPiece('e', 1, new King(board, Color.White));
+            placeNewPiece('e', 1, new King(board, Color.White, this));
             placeNewPiece('f', 1, new Bishop(board, Color.White));
             placeNewPiece('g', 1, new Horse(board, Color.White));
             placeNewPiece('h', 1, new Rook(board, Color.White));
@@ -254,7 +296,7 @@ namespace ChessOnConsole.chess
             placeNewPiece('b', 8, new Horse(board, Color.Black));
             placeNewPiece('c', 8, new Bishop(board, Color.Black));
             placeNewPiece('d', 8, new Queen(board, Color.Black));
-            placeNewPiece('e', 8, new King(board, Color.Black));
+            placeNewPiece('e', 8, new King(board, Color.Black, this));
             placeNewPiece('f', 8, new Bishop(board, Color.Black));
             placeNewPiece('g', 8, new Horse(board, Color.Black));
             placeNewPiece('h', 8, new Rook(board, Color.Black));
