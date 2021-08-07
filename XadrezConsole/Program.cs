@@ -16,11 +16,7 @@ namespace XadrezConsole
                 try
                 {
                     Console.Clear();
-                    Screen.printBoard(match.board);
-
-                    Console.WriteLine();
-                    Console.WriteLine("Round: " + match.round);
-                    Console.WriteLine("Waiting for player " + match.currentPlayer);
+                    Screen.printMatch(match);
 
                     Console.WriteLine();
                     Console.Write("Origin: ");
