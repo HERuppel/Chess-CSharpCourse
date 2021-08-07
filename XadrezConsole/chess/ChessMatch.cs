@@ -149,6 +149,21 @@ namespace ChessOnConsole.chess
                 throw new BoardException("You cannot put yourself in check!");
             }
 
+            Piece p = board.piece(destiny);
+
+            //#Special move = promotion
+            if (p is Pawn)
+            {
+                if ((p.color == Color.White && destiny.row == 0) || (p.color == Color.Black && destiny.row == 7))
+                {
+                    p = board.takePiece(destiny);
+                    pieces.Remove(p);
+                    Piece queen = new Queen(board, p.color);
+                    board.placePiece(queen, destiny);
+                    pieces.Add(queen);
+                }
+            }
+
             if (isInCheck(adversary(currentPlayer)))
             {
                 check = true;
@@ -168,7 +183,6 @@ namespace ChessOnConsole.chess
                 switchPlayer();
             }
 
-            Piece p = board.piece(destiny);
 
             //#Special move = en passant
 
