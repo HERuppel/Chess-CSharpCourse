@@ -16,6 +16,10 @@ namespace ChessOnConsole
             Console.WriteLine();
             Console.WriteLine("Round: " + match.round);
             Console.WriteLine("Waiting for player: " + match.currentPlayer);
+            if (match.check)
+            {
+                Console.WriteLine("CHECK!");
+            }
         }
 
         public static void printCapturedPieces(ChessMatch match)
