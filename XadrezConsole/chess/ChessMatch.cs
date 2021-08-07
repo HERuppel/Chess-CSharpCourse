@@ -99,7 +99,7 @@ namespace ChessOnConsole.chess
 
         public void validateDestiny(Position origin, Position destiny)
         {
-            if (!board.piece(origin).canMoveTo(destiny))
+            if (!board.piece(origin).possibleMove(destiny))
             {
                 throw new BoardException("Invalid destiny!");
             }
@@ -233,19 +233,39 @@ namespace ChessOnConsole.chess
 
         private void placePieces()
         {
-            placeNewPiece('c', 1, new Rook(board, Color.White));
-            placeNewPiece('c', 2, new Rook(board, Color.White));
-            placeNewPiece('d', 2, new Rook(board, Color.White));
-            placeNewPiece('e', 2, new Rook(board, Color.White));
-            placeNewPiece('e', 1, new Rook(board, Color.White));
-            placeNewPiece('d', 1, new King(board, Color.White));
+            placeNewPiece('a', 1, new Rook(board, Color.White));
+            placeNewPiece('b', 1, new Horse(board, Color.White));
+            placeNewPiece('c', 1, new Bishop(board, Color.White));
+            placeNewPiece('d', 1, new Queen(board, Color.White));
+            placeNewPiece('e', 1, new King(board, Color.White));
+            placeNewPiece('f', 1, new Bishop(board, Color.White));
+            placeNewPiece('g', 1, new Horse(board, Color.White));
+            placeNewPiece('h', 1, new Rook(board, Color.White));
+            placeNewPiece('a', 2, new Pawn(board, Color.White));
+            placeNewPiece('b', 2, new Pawn(board, Color.White));
+            placeNewPiece('c', 2, new Pawn(board, Color.White));
+            placeNewPiece('d', 2, new Pawn(board, Color.White));
+            placeNewPiece('e', 2, new Pawn(board, Color.White));
+            placeNewPiece('f', 2, new Pawn(board, Color.White));
+            placeNewPiece('g', 2, new Pawn(board, Color.White));
+            placeNewPiece('h', 2, new Pawn(board, Color.White));
 
-            placeNewPiece('c', 7, new Rook(board, Color.Black));
-            placeNewPiece('c', 8, new Rook(board, Color.Black));
-            placeNewPiece('d', 7, new Rook(board, Color.Black));
-            placeNewPiece('e', 7, new Rook(board, Color.Black));
-            placeNewPiece('e', 8, new Rook(board, Color.Black));
-            placeNewPiece('d', 8, new King(board, Color.Black));
+            placeNewPiece('a', 8, new Rook(board, Color.Black));
+            placeNewPiece('b', 8, new Horse(board, Color.Black));
+            placeNewPiece('c', 8, new Bishop(board, Color.Black));
+            placeNewPiece('d', 8, new Queen(board, Color.Black));
+            placeNewPiece('e', 8, new King(board, Color.Black));
+            placeNewPiece('f', 8, new Bishop(board, Color.Black));
+            placeNewPiece('g', 8, new Horse(board, Color.Black));
+            placeNewPiece('h', 8, new Rook(board, Color.Black));
+            placeNewPiece('a', 7, new Pawn(board, Color.Black));
+            placeNewPiece('b', 7, new Pawn(board, Color.Black));
+            placeNewPiece('c', 7, new Pawn(board, Color.Black));
+            placeNewPiece('d', 7, new Pawn(board, Color.Black));
+            placeNewPiece('e', 7, new Pawn(board, Color.Black));
+            placeNewPiece('f', 7, new Pawn(board, Color.Black));
+            placeNewPiece('g', 7, new Pawn(board, Color.Black));
+            placeNewPiece('h', 7, new Pawn(board, Color.Black));
 
         }
     }
