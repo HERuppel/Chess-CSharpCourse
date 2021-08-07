@@ -13,6 +13,7 @@ namespace ChessOnConsole.chess
         private HashSet<Piece> pieces;
         private HashSet<Piece> captured;
         public bool check { get; private set; }
+        public Piece vulnerableEnPassant { get; private set; }
 
         public ChessMatch()
         {
@@ -21,6 +22,7 @@ namespace ChessOnConsole.chess
             currentPlayer = Color.White;
             finished = false;
             check = false;
+            vulnerableEnPassant = null;
             pieces = new HashSet<Piece>();
             captured = new HashSet<Piece>();
             placePieces();
@@ -58,6 +60,26 @@ namespace ChessOnConsole.chess
                 board.placePiece(Rook, destinyR);
             }
 
+            //#Special move = en passant
+            if (piece is Pawn)
+            {
+                if (origin.column != destiny.column && capturedPiece == null)
+                {
+                    Position posP;
+                    if (piece.color == Color.White)
+                    {
+                        posP = new Position(destiny.row + 1, destiny.column);
+                    }
+                    else
+                    {
+                        posP = new Position(destiny.row - 1, destiny.column);
+                    }
+                    capturedPiece = board.takePiece(posP);
+                    captured.Add(capturedPiece);
+                }
+            }
+
+
             return capturedPiece;
         }
 
@@ -94,6 +116,27 @@ namespace ChessOnConsole.chess
             }
 
 
+            //#Special move = en passant
+            if (p is Pawn)
+            {
+                if (origin.column != destiny.column && capturedPiece == vulnerableEnPassant)
+                {
+                    Piece pawn = board.takePiece(destiny);
+                    Position posP;
+
+                    if(pawn.color == Color.White)
+                    {
+                        posP = new Position(3, destiny.column);
+                    }
+                    else
+                    {
+                        posP = new Position(4, destiny.column);
+                    }
+                    board.placePiece(pawn, posP);
+                } 
+            }
+
+
         }
 
         public void makeAPlay(Position origin, Position destiny)
@@ -109,7 +152,8 @@ namespace ChessOnConsole.chess
             if (isInCheck(adversary(currentPlayer)))
             {
                 check = true;
-            } else
+            }
+            else
             {
                 check = false;
             }
@@ -118,9 +162,25 @@ namespace ChessOnConsole.chess
             {
                 finished = true;
             }
+            else
+            {
+                round++;
+                switchPlayer();
+            }
 
-            round++;
-            switchPlayer();
+            Piece p = board.piece(destiny);
+
+            //#Special move = en passant
+
+            if (p is Pawn && (destiny.row == origin.row - 2 || destiny.row == origin.row + 2))
+            {
+                vulnerableEnPassant = p;
+            }
+            else
+            {
+                vulnerableEnPassant = null;
+            }
+
         }
 
         public void validateOrigin(Position pos)
@@ -129,7 +189,8 @@ namespace ChessOnConsole.chess
             {
                 throw new BoardException("There is no piece at the chosen origin position!");
             }
-            if (currentPlayer != board.piece(pos).color) {
+            if (currentPlayer != board.piece(pos).color)
+            {
                 throw new BoardException("The chosen origin piece is not yours!");
             }
             if (!board.piece(pos).existPossibleMoves())
@@ -163,7 +224,7 @@ namespace ChessOnConsole.chess
         {
             HashSet<Piece> aux = new HashSet<Piece>();
 
-            foreach(Piece p in captured)
+            foreach (Piece p in captured)
             {
                 if (p.color == color)
                 {
@@ -178,16 +239,17 @@ namespace ChessOnConsole.chess
             if (color == Color.White)
             {
                 return Color.Black;
-            } else
+            }
+            else
             {
                 return Color.White;
             }
-            
+
         }
 
         private Piece king(Color color)
         {
-            foreach(Piece p in inGamePieces(color))
+            foreach (Piece p in inGamePieces(color))
             {
                 if (p is King)
                 {
@@ -206,7 +268,7 @@ namespace ChessOnConsole.chess
                 throw new BoardException("There is no " + color + " king!");
             }
 
-            foreach(Piece p in inGamePieces(adversary(color)))
+            foreach (Piece p in inGamePieces(adversary(color)))
             {
                 bool[,] mat = p.possibleMoves();
 
@@ -225,7 +287,7 @@ namespace ChessOnConsole.chess
                 return false;
             }
 
-            foreach(Piece p in inGamePieces(color))
+            foreach (Piece p in inGamePieces(color))
             {
                 bool[,] mat = p.possibleMoves();
 
@@ -256,7 +318,7 @@ namespace ChessOnConsole.chess
         {
             HashSet<Piece> aux = new HashSet<Piece>();
 
-            foreach(Piece p in pieces)
+            foreach (Piece p in pieces)
             {
                 if (p.color == color)
                 {
