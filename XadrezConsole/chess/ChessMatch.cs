@@ -72,6 +72,11 @@ namespace ChessOnConsole.chess
                 check = false;
             }
 
+            if (testCheckMate(adversary(currentPlayer)))
+            {
+                finished = true;
+            }
+
             round++;
             switchPlayer();
         }
@@ -169,6 +174,40 @@ namespace ChessOnConsole.chess
                 }
             }
             return false;
+        }
+
+        public bool testCheckMate(Color color)
+        {
+            if (!isInCheck(color))
+            {
+                return false;
+            }
+
+            foreach(Piece p in inGamePieces(color))
+            {
+                bool[,] mat = p.possibleMoves();
+
+                for (int i = 0; i < board.rows; i++)
+                {
+                    for (int j = 0; j < board.columns; j++)
+                    {
+                        if (mat[i, j])
+                        {
+                            Position origin = p.position;
+                            Position destiny = new Position(i, j);
+                            Piece capturedPiece = executeMove(origin, destiny);
+                            bool testCheck = isInCheck(color);
+                            undoMove(origin, destiny, capturedPiece);
+
+                            if (!testCheck)
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
 
         public HashSet<Piece> inGamePieces(Color color)
