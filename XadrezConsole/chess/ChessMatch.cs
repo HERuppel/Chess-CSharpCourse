@@ -6,8 +6,8 @@ namespace ChessOnConsole.chess
     class ChessMatch
     {
         public Board board { get; private set; }
-        private int round;
-        private Color currentPlayer;
+        public int round { get; private set; }
+        public Color currentPlayer { get; private set; }
         public bool finished { get; private set; }
 
         public ChessMatch()
@@ -25,6 +25,50 @@ namespace ChessOnConsole.chess
             piece.incrementMoves();
             Piece capturedPiece = board.takePiece(destiny);
             board.placePiece(piece, destiny);
+        }
+
+        public void makeAPlay(Position origin, Position destiny)
+        {
+            executeMove(origin, destiny);
+            round++;
+
+            switchPlayer();
+        }
+
+        public void validateOrigin(Position pos)
+        {
+            if (board.piece(pos) == null)
+            {
+                throw new BoardException("There is no piece at the chosen origin position!");
+            }
+            if (currentPlayer != board.piece(pos).color) {
+                throw new BoardException("The chosen origin piece is not yours!");
+            }
+            if (!board.piece(pos).existPossibleMoves())
+            {
+                throw new BoardException("There are no possible moves for the chosen origin piece!");
+            }
+
+        }
+
+        public void validateDestiny(Position origin, Position destiny)
+        {
+            if (!board.piece(origin).canMoveTo(destiny))
+            {
+                throw new BoardException("Invalid destiny!");
+            }
+        }
+
+        private void switchPlayer()
+        {
+            if (currentPlayer == Color.White)
+            {
+                currentPlayer = Color.Black;
+            }
+            else
+            {
+                currentPlayer = Color.White;
+            }
         }
 
         private void placePieces()

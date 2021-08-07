@@ -13,23 +13,37 @@ namespace XadrezConsole
 
             while(!match.finished)
             {
-                Console.Clear();
-                Screen.printBoard(match.board);
+                try
+                {
+                    Console.Clear();
+                    Screen.printBoard(match.board);
 
-                Console.WriteLine();
-                Console.Write("Origin: ");
-                Position origin = Screen.readChessPosition().toPosition();
+                    Console.WriteLine();
+                    Console.WriteLine("Round: " + match.round);
+                    Console.WriteLine("Waiting for player " + match.currentPlayer);
 
-                bool[,] possiblePositions = match.board.piece(origin).possibleMoves();
+                    Console.WriteLine();
+                    Console.Write("Origin: ");
+                    Position origin = Screen.readChessPosition().toPosition();
+                    match.validateOrigin(origin);
 
-                Console.Clear();
-                Screen.printBoard(match.board, possiblePositions);
+                    bool[,] possiblePositions = match.board.piece(origin).possibleMoves();
 
-                Console.WriteLine();
-                Console.Write("Destiny: ");
-                Position destiny = Screen.readChessPosition().toPosition();
+                    Console.Clear();
+                    Screen.printBoard(match.board, possiblePositions);
 
-                match.executeMove(origin, destiny);
+                    Console.WriteLine();
+                    Console.Write("Destiny: ");
+                    Position destiny = Screen.readChessPosition().toPosition();
+                    match.validateDestiny(origin, destiny);
+
+                    match.makeAPlay(origin, destiny);
+                }
+                catch (BoardException err)
+                {
+                    Console.WriteLine(err.Message);
+                    Console.ReadLine();
+                }
             }
 
 
